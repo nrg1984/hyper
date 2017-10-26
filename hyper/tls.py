@@ -106,10 +106,12 @@ def init_context(cert_path=None, cert=None, cert_password=None):
         raise MissingCertFile(err_msg)
 
     context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-    context.set_default_verify_paths()
-    context.load_verify_locations(cafile=cafile)
-    context.verify_mode = ssl.CERT_REQUIRED
-    context.check_hostname = True
+
+    if cert is not None:
+        context.set_default_verify_paths()
+        context.load_verify_locations(cafile=cafile)
+        context.verify_mode = ssl.CERT_REQUIRED
+        context.check_hostname = True
 
     with ignore_missing():
         context.set_npn_protocols(SUPPORTED_NPN_PROTOCOLS)
