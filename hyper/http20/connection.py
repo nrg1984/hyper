@@ -460,7 +460,7 @@ class HTTP20Connection(object):
             try:
                 with self._conn as conn:
                     conn.close_connection(error_code or 0)
-                self._send_outstanding_data(tolerate_peer_gone=True)
+                self._send_outstanding_data(tolerate_peer_gone=True,  send_empty=False)
             except Exception as e:  # pragma: no cover
                 log.warn("GoAway frame could not be sent: %s" % e)
 
